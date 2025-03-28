@@ -1,0 +1,16 @@
+alert("Weather data is being updated!");
+
+<% if @weather.is_a?(WeatherDecorator) %>
+  $("#weather-container").html(`
+    <h2>Weather for <%= j @weather.name.to_s %></h2>
+    <p>Temperature: <%= j @weather.temperature.to_s %>°C</p>
+    <p>High: <%= j @weather.max_temp.to_s %>°C</p>
+    <p>Low: <%= j @weather.min_temp.to_s %>°C</p>
+    <p>Condition: <%= j @weather.condition.to_s %></p>
+  `);
+<% else %>
+  $("#weather-container").html(`
+    <p style='color:red;'>Error: <%= j(@weather[:error].to_s || 'Could not fetch weather data') %></p>
+    <p>Debug Info: <%= j @weather.inspect.to_s %></p>
+  `);
+<% end %>
