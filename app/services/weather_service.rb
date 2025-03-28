@@ -6,6 +6,7 @@ class WeatherService
 
   def self.get_forecast(zip_code)
     api_key = Rails.application.credentials.dig(:openweather_api_key)
+    raise StandardError, "API key is missing" if api_key.nil? || api_key.strip.empty?
     response = HTTParty.get("#{BASE_URL}?zip=#{zip_code},us&appid=#{api_key}&units=metric")
 
     if response.success?
